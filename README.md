@@ -1,5 +1,25 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Installing dependencies
+First of all, make sure you install all the necessary dependencies
+
+`yarn install` or `npm install`
+
+## Setting up environment variables
+For testing purposes, we can define our environment variables locally.
+
+Copy the `.env` file and name it `.env.local`
+
+Then, replace the host and api token values accordingly
+
+For example: 
+```.env
+REACT_APP_DATAVERSE_HOST='https://demo.dataverse.org'
+REACT_APP_DATAVERSE_API_TOKEN='e864d616-849f-40bc-91db-73332cfb85e5'
+```
+
+Now, we are able to test the `Get Dataverse information` button
+
 ## Available Scripts
 
 In the project directory, you can run:

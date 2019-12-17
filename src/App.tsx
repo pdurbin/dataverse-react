@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import { DataverseClient } from 'js-dataverse'
+import { Button, Row } from 'react-bootstrap'
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface AppState {
+  data?: any
 }
 
-export default App;
+class App extends React.Component<{}, AppState> {
+
+  public constructor(props: any) {
+    super(props)
+
+    this.state = {}
+  }
+
+  public render() {
+    return (
+      <div className="App">
+        <div className={'dataverse-container'}>
+          <Button onClick={() => this.getDatasetInformation()}>Get Dataverse information</Button>
+          <div className={'dataverse-response'}>{JSON.stringify(this.state.data)}</div>
+        </div>
+      </div>
+    )
+  }
+
+  private async getDatasetInformation() {
+    const host: string = process.env.REACT_APP_DATAVERSE_HOST ? process.env.REACT_APP_DATAVERSE_HOST : ''
+    const apiToken: string = process.env.REACT_APP_DATAVERSE_API_TOKEN ? process.env.REACT_APP_DATAVERSE_API_TOKEN : ''
+    const client = new DataverseClient(host, apiToken)
+    const response = await client.getDataverseInformation('demo').catch(error => console.log(error))
+    this.setState({
+      data: response
+    })
+  }
+}
+
+export default App
