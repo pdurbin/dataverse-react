@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import { DataverseClient } from 'js-dataverse'
 import { Button, Row } from 'react-bootstrap'
+import { DataverseService } from './services/DataverseService'
 
 interface AppState {
   data?: any
@@ -27,10 +28,7 @@ class App extends React.Component<{}, AppState> {
   }
 
   private async getDatasetInformation() {
-    const host: string = process.env.REACT_APP_DATAVERSE_HOST ? process.env.REACT_APP_DATAVERSE_HOST : ''
-    const apiToken: string = process.env.REACT_APP_DATAVERSE_API_TOKEN ? process.env.REACT_APP_DATAVERSE_API_TOKEN : ''
-    const client = new DataverseClient(host, apiToken)
-    const response = await client.getDataverseInformation('demo').catch(error => console.log(error))
+    const response = await DataverseService.getDataverseInformation()
     this.setState({
       data: response
     })
